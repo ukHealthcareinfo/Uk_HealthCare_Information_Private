@@ -1,44 +1,75 @@
-<!--ring div starts here-->
+<!-- Ring div starts here -->
 <div class="ring">
   <i style="--clr:#00ff0a;"></i>
   <i style="--clr:#ff0057;"></i>
   <i style="--clr:#fffd44;"></i>
   <div class="login">
-    <h2>Login</h2>
+    <h2>Private Login</h2>
     <div class="inputBx">
-      <input type="text" id="username" placeholder="Username">
+      <input type="text" placeholder="Username" id="username" />
     </div>
     <div class="inputBx">
-      <input type="password" id="password" placeholder="Password">
+      <input type="password" placeholder="Password" id="password" />
     </div>
     <div class="inputBx">
-      <input type="submit" id="loginBtn" value="Sign in">
+      <input type="submit" value="Sign in" onclick="checkLogin()" />
     </div>
-    <div class="error-message" id="errorMsg" style="display:none; color:#ff0057; font-weight:bold; font-family: 'Courier New', Courier, monospace; text-align:center; padding:10px;"></div>
+    
+    <!-- Error message -->
+    <p id="error" class="error-msg">
+      ❌ Access Denied: Invalid credentials.<br>
+      🚨 This secure login is reserved strictly for private UK Government access. Unauthorized use is prohibited under law. Activity is monitored and logged for security purposes. If you're not an authorized individual, exit this portal immediately.
+    </p>
   </div>
 </div>
-<!--ring div ends here-->
+<!-- Ring div ends here -->
 
-<script>
-const allowedUsername = "nitKindOM44@_UKgovt_priVAtE@";
-const allowedPassword = "UkGovT_AllOw_@nitKindOM44@_UKgovt44@";
-const errorMsg = document.getElementById("errorMsg");
-document.getElementById("loginBtn").onclick = function(e) {
-  e.preventDefault();
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
-  if (user === allowedUsername && pass === allowedPassword) {
-    // Proceed to next page or success action
-    alert("Login successful!");
-  } else {
-    errorMsg.innerHTML = `<span style="font-size:1.1em;">This website is exclusively for UK government personnel.<br>
-    Only authorized users may log in.<br>
-    If you’re not part of the UK government, access is denied.<br>
-    All resources here are strictly for official use.<br>
-    For issues, contact support.<br>
-    Unauthorized access is strictly prohibited.</span>`;
-    errorMsg.style.display = "block";
-    setTimeout(() => { errorMsg.style.display = "none"; }, 15000);
+<!-- CSS for error message -->
+<style>
+  .error-msg {
+    display: none;
+    color: #fff;
+    background: linear-gradient(135deg, #ff0000, #990000);
+    border: 2px solid #fff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    animation: fadeInOut 10s ease-in-out;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: center;
   }
-};
+
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10px); }
+  }
+</style>
+
+<!-- JavaScript for login check -->
+<script>
+  function checkLogin() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const correctUsername = "nitKindOM44@_UKgovt_priVAtE@";
+    const correctPassword = "UkGovT_AllOw_@nitKindOM44@_UKgovt44@";
+
+    const errorBox = document.getElementById("error");
+
+    if (username === correctUsername && password === correctPassword) {
+      alert("✅ Access granted.");
+      // window.location.href = "dashboard.html"; // Uncomment to redirect
+    } else {
+      errorBox.style.display = "block";
+      // Auto hide after 10 seconds
+      setTimeout(() => {
+        errorBox.style.display = "none";
+      }, 10000);
+    }
+  }
 </script>
